@@ -1,7 +1,7 @@
 
 # MultiAgentCompil
 
-## Etape 1 Liste des unités lexicales
+## Liste des unités lexicales
 - **Mot clé Environnement** : Chaîne « *Environnement* »
 - **Identificateur** : chaîne de caractères de longueur supérieure ou égale à 1 constituée de lettres majuscules et minuscules non accentuées, de chiffres et de « _ », dont le premier caractère est une lettre
 - **Crochet ouvrant** : Caractère *[*
@@ -21,31 +21,86 @@
 - **Booléen** : Chaîne appartenant à l’ensemble *{TRUE, FALSE}*
 - **Mot clé NewContexte** : Chaîne « *NewContexte* »
 
-## Etape 3 Grammaire décrivant la syntaxe des fichiers d'entrée 
+## Grammaire décrivant la syntaxe des fichiers d'entrée 
 
-**Axiome :**  S 
+**Symboles terminaux (Vt):** 
+
+    ENV (Environnement) 
+    NTYPA (NewTypeAgent)  
+    NAG (NewAgent) 
+    NCT (NewContexte)  
+    TINT (Type d'attribut int)  
+    TDOUBL (Type d'attribut double)  
+    TCAR (Type d'attribut caractère)  
+    TCH (Type d'attribut chaîne)  
+    TBOOL (Type d'attribut booléen)  
+    BOOL (Booléen)  
+    IDF (Identificateur)
+    CO (Crochet ouvrant)  
+    CF (Crochet fermant)  
+    VG (Virgule)  
+    AO (Accolade ouvrante)  
+    AF (Accolade fermante)  
+    DPT (Deux points)  
+    INT (Nombre entier)  
+    EG (Egal)  
+    REEL (Nombre réel)  
+    CH (Chaîne de caractères)  
+    CAR (Caractère)
+
+**Symboles non terminaux (Vn) :**
+
+- Program 
+- decla_env (déclaration d’environnement) 
+- suite_prog (suite du programme, après déclaration de l’environnement) 
+- instruction 
+- new_typ_agent (déclaration d’un nouveau type d’agent) 
+- liste_decla_attributs (liste de déclarations d’attributs) 
+- decla_attribut (déclaration d’un attribut) 
+- type_attribut 
+- new_agent (déclaration d’un nouvel agent) 
+- liste_affect_attributs (liste d’instanciations d’attributs)  
+- affect_attribut (instanciation d’un attribut) 
+- valeur_attribut 
+- new_context (déclaration d’un nouveau contexte)
+
+**Axiome :** 
+
+    program
 
 **Règles :**  
-- **S** -> ENV IDF CO INT VG INT CF D 
-- **D** -> NTYPA IDF AO LAF AF D | NAG IDF DPT IDF CO INT VG INT CF AO LAA AF D 
-   | NCT IDF CO INT CF D | NCT IDF CO INT VG INT VG INT VG INT CF D | λ
-- **LAF** -> IDF DPT T LAF | IDF DPT T
-- **LAA** -> IDF EG V LAA | IDF EG V | λ
-- **T** -> TINT | TDOUBL | TCAR | TCH | TBOOL
-- **V** -> INT | REEL | CAR | CH | BOOL
 
-**Symboles terminaux :** 
+- **program** -> decla_env suite_prog 
+- **decla_env** -> ENV IDF CO INT VG INT CF 
+- **suite_prog** -> instruction | instruction suite_prog 
+- **instruction** -> new_typ_agent | new_agent | new_context 
+- **new_typ_agent** -> NTYPA IDF AO liste_decla_attributs AF 
+- **liste_decla_attributs** - decla_attribut | decla_attribut VG liste_decla_attributs 
+- **decla_attribut** -> IDF DPT type_attribut 
+- **type_attribut** -> TINT | TDOUBL | TCAR | TCH | TBOOL 
+- **new_agent** -> NAG IDF DPT IDF CO INT VG INT CF AO liste_affect_attributs AF
+- **liste_affect_attributs** -> affect_attribut | affect_attribut VG liste_affect_attributs 
+- **affect_attribut** -> IDF EG valeur_attribut 
+- **valeur_attribut** -> INT | REEL | CH | CAR | BOOL 
+- **new_context** -> NCT IDF CO INT CF | NCT IDF CO INT VG INT VG INT VG INT CF
 
-    ENV, NTYPA, NAG, NCT, IDF, INT, REEL, CAR, CH, BOOL, 
-    TINT, TDOUBL, TCAR, TCH, TBOOL, AO, AF, CO, CF, VG, DPT, EG
+## Compilation
 
-**Symboles non terminaux :**
+Flex et Bison (Lex et Yacc) pour l'analyse lexicale et syntaxique.
 
-    S, D, LAF, LAA, T, V
-    
-    S -> Axiome
-    D -> Déclaration
-    LAF -> Liste d'attributs formel (paramètres des agents)
-    LAA -> Liste d'attributs actuels (valeurs attribuées aux paramètres)
-    T -> Type de données (int, double, char, ect...)
-    V -> Valeur (42, 38.74, 'c', "Hello World", true/false)
+**Pour compiler :** 
+```bash
+make -> Compilation
+make clean -> Effacer les fichiers de compilation
+make distclean -> Nettoyage complet y compris executable
+```
+
+**Exécuter**
+```bash
+./analyseur < <fichier d'entrée>
+```
+
+## Table des symboles
+
+**symbol_table.c** et **symbole_table.h**
+

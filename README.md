@@ -103,4 +103,43 @@ make distclean -> Nettoyage complet y compris executable
 ## Table des symboles
 
 **symbol_table.c** et **symbole_table.h**
+### Activer la table des symboles
+Fichier : *analyseur.lex* 
+```python
+int yywrap(){
+    //affTab(); // Décommenter pour voir la table des symboles
+    //prettyPrint(); // Décommenter pour voir la table des symboles avec un affichage plus joli
+    return 1;
+}
+```
 
+**Exemple de sortie :**
+```bash
+0 : [idf, 0, 3, env]
+1 : [ent, 3, 3, ]
+2 : [ent, 6, 2, ]
+3 : [idf, 8, 6, typA]
+4 : [idf, 14, 5, attr]
+5 : [idf, 19, 6, attr]
+6 : [idf, 25, 8, attr]
+7 : [idf, 33, 2, ag]
+8 : [ent, 35, 3, ]
+9 : [ent, 38, 2, ]
+10 : [car, 40, 3, ]
+11 : [reel, 43, 3, ]
+12 : [idf, 46, 2, ag]
+13 : [ent, 48, 3, ]
+14 : [ent, 51, 2, ]
+15 : [car, 53, 3, ]
+16 : [reel, 56, 4, ]
+17 : [idf, 60, 2, ag]
+18 : [ent, 62, 3, ]
+19 : [ent, 65, 2, ]
+20 : [reel, 67, 3, ]
+21 : [idf, 70, 5, cont]
+22 : [ent, 75, 2, ]
+23 : [ent, 77, 3, ]
+24 : [ent, 80, 1, ]
+25 : [idf, 81, 5, cont]
+rue50050pietongenretailleattentifp140010'M'1,8p230020'F'1,65p3350151,7arbre254505pluie
+```

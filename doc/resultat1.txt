@@ -1,0 +1,40 @@
+Environnement
+NewTypeAgent
+NewAgent
+NewContexte
+Type d'attribut : int
+Type d'attribut : double
+Type d'attribut : char
+Type d'attribut : string
+Type d'attribut : boolean
+Booléen : TRUE
+Booléen : FALSE
+Crochet ouvrant
+Crochet fermant
+Accolade ouvrante
+Accolade fermante
+Virgule
+Deux-points
+Egal
+Identificateur : coucou
+Identificateur : toto43
+Identificateur : machin_23456
+Chaîne de caractères : "chaîne de caractères"
+Caractère : '%'
+Nombre entier : 12345
+Nombre réel : 0,345
+Crochet ouvrant
+Nombre entier : 123
+Virgule
+Nombre entier : 32
+Crochet fermant
+Erreur lexicale. Caractère ' non reconnu
+Identificateur : tp
+Erreur lexicale. Caractère ' non reconnu
+Erreur lexicale. Caractère ! non reconnu
+Chaîne de caractères : "ppp"
+Identificateur : ppp
+Erreur lexicale. Caractère " non reconnu
+Nombre entier : 3
+Erreur lexicale. Caractère . non reconnu
+Nombre entier : 14

@@ -1,0 +1,15 @@
+Environnement   NewTypeAgent NewAgent  NewContexte
+
+int double  char   string boolean
+TRUE FALSE
+
+[ ] { } , : =
+
+coucou   toto43  machin_23456
+
+"chaîne de caractères"   '%'  12345  0,345
+
+[123,32]
+
+'tp' ! "ppp"ppp" 3.14
+

@@ -1,0 +1,18 @@
+Environnement rue [500, 50]
+
+NewTypeAgent pieton 
+{ genre : char , 
+taille : double ,
+attentif : boolean
+}
+
+
+NewAgent p1 : pieton [400, 10] { genre ='M' , taille = 1,8 , attentif = TRUE }
+NewAgent p2 : pieton[300,20] { genre='F' , taille = 1,65 , attentif = FALSE }
+NewAgent p3 : pieton[350,15] { genre='M' , taille = 1,7 , attentif = TRUE }
+
+NewContexte arbre [25,450,10,5]
+
+NewContexte pluie[50]
+
+

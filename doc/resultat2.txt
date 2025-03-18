@@ -1,0 +1,88 @@
+Environnement
+Identificateur : rue
+Crochet ouvrant
+Nombre entier : 500
+Virgule
+Nombre entier : 50
+Crochet fermant
+NewTypeAgent
+Identificateur : pieton
+Accolade ouvrante
+Identificateur : genre
+Deux-points
+Type d'attribut : char
+Virgule
+Identificateur : taille
+Deux-points
+Type d'attribut : double
+Accolade fermante
+NewAgent
+Identificateur : p1
+Deux-points
+Identificateur : pieton
+Crochet ouvrant
+Nombre entier : 400
+Virgule
+Nombre entier : 10
+Crochet fermant
+Accolade ouvrante
+Identificateur : genre
+Egal
+Caractère : 'M'
+Virgule
+Identificateur : taille
+Egal
+Nombre réel : 1,8
+Accolade fermante
+NewAgent
+Identificateur : p2
+Deux-points
+Identificateur : pieton
+Crochet ouvrant
+Nombre entier : 300
+Virgule
+Nombre entier : 20
+Crochet fermant
+Accolade ouvrante
+Identificateur : genre
+Egal
+Caractère : 'F'
+Virgule
+Identificateur : taille
+Egal
+Nombre réel : 1,65
+Accolade fermante
+NewAgent
+Identificateur : p3
+Deux-points
+Identificateur : pieton
+Crochet ouvrant
+Nombre entier : 350
+Virgule
+Nombre entier : 15
+Crochet fermant
+Accolade ouvrante
+Identificateur : genre
+Egal
+Caractère : 'M'
+Virgule
+Identificateur : taille
+Egal
+Nombre réel : 1,7
+Accolade fermante
+NewContexte
+Identificateur : arbre
+Crochet ouvrant
+Nombre entier : 25
+Virgule
+Nombre entier : 450
+Virgule
+Nombre entier : 10
+Virgule
+Nombre entier : 5
+Crochet fermant
+NewContexte
+Identificateur : pluie
+Crochet ouvrant
+Nombre entier : 50
+Crochet fermant

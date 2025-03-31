@@ -10,7 +10,7 @@ enum categorie {
     C_ENT = 2,
     C_REEL = 3,
     C_CHAR = 4,
-    C_CHAINE = 5
+    C_CHAINE = 5,
 };
 
 // Types d'objets identificateurs
@@ -22,12 +22,21 @@ enum typeObj {
     TO_CONT = 5
 };
 
+enum typeAtt {
+    TA_INT = 1,
+    TA_DOU = 2,
+    TA_CAR = 3,
+    TA_STR = 4,
+    TA_BOO = 5
+};
+
 // Variables globales externes
 extern int** tab1;
 extern int tab1_size;
 extern char* tab2;
 extern int tab2_size;
 extern int lastTypeObj;
+extern int lastTypeAtt;
 
 // Fonctions
 int checkAndUpdateTab(int categorie);

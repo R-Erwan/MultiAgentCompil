@@ -10,6 +10,7 @@ int tab1_size = 0;
 char* tab2 = NULL;
 int tab2_size = 0;
 int lastTypeObj = 0;
+int lastTypeAtt = 0;
 
 extern char* yytext;
 
@@ -70,7 +71,9 @@ int checkAndUpdateTab(int categorie) {
     tab1[tab1_size][1] = tab2_size;
     tab1[tab1_size][2] = new_str_len;
     tab1[tab1_size][3] = lastTypeObj;
+    tab1[tab1_size][4] = lastTypeAtt;
     lastTypeObj = 0;
+    lastTypeAtt = 0;
 
     // Copie de yytext dans tab2
     strcpy(&tab2[tab2_size], yytext);
@@ -83,7 +86,7 @@ int checkAndUpdateTab(int categorie) {
 // Affichage de la table des symboles
 void affTab() {
     for (int i = 0; i < tab1_size; i++) {
-        printf("%d : [%d, %d, %d, %d]\n", i, tab1[i][0], tab1[i][1], tab1[i][2], tab1[i][3]);
+        printf("%d : [%d, %d, %d, %d, %d]\n", i, tab1[i][0], tab1[i][1], tab1[i][2], tab1[i][3], tab1[i][4]);
     }
     printf("%s\n", tab2);
 }
@@ -92,9 +95,10 @@ void affTab() {
 void prettyPrint() {
     const char* categories[] = {"", "idf", "ent", "reel", "car", "cha"};
     const char* typeObj[] = {"", "env", "typA", "attr", "ag", "cont"};
+    const char* typeAtt[] = {"", "int", "dou", "car", "str", "boo"};
 
     for (int i = 0; i < tab1_size; i++) {
-        printf("%d : [%s, %d, %d, %s]\n", i, categories[tab1[i][0]], tab1[i][1], tab1[i][2], typeObj[tab1[i][3]]);
+        printf("%d : [%s, %d, %d, %s, %s]\n", i, categories[tab1[i][0]], tab1[i][1], tab1[i][2], typeObj[tab1[i][3]], typeAtt[tab1[i][4]]);
     }
     printf("%s\n", tab2);
 }

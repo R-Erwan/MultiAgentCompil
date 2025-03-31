@@ -75,6 +75,8 @@ int main() {
     initSymbolTable();  // Initialisation de la table des symboles
 
     yyparse();  // Analyse du fichier d'entrée
+    printf("\nFin des analyses lexicale et syntaxique\n");
+    
 
     freeSymbolTable();  // Libération de la mémoire à la fin
     return 0;

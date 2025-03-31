@@ -16,36 +16,51 @@ Environnement {
     lastTypeObj = TO_ENV; 
     return ENV;
 }
+
 NewTypeAgent {
     lastTypeObj = TO_TYPA; 
     return NTYPA;
 }
+
 NewAgent {
     lastTypeObj = TO_AG; 
     return NAG;
 }
+
 NewContexte {
     lastTypeObj = TO_CONT; 
     return NCT;
 }
+
 int {
+    lastTypeAtt = TA_INT;
     return TINT;
 }
+
 double {
+    lastTypeAtt = TA_DOU;
     return TDOUBL;
 }
+
 char {
+    lastTypeAtt = TA_CAR;
     return TCAR;
 }
+
 string {
+    lastTypeAtt = TA_STR;
     return TCH;
 }
+
 boolean {
+    lastTypeAtt = TA_BOO;
     return TBOOL;
 }
+
 TRUE|FALSE {
     return BOOL;
 }
+
 [a-zA-Z][a-zA-Z0-9_]* {
     lastTypeObj = lastTypeObj == 0 ? TO_ATTR : lastTypeObj;
     checkAndUpdateTab(C_IDF); 
@@ -99,6 +114,6 @@ TRUE|FALSE {
 
 int yywrap(){
     //affTab(); // Décommenter pour voir la table des symboles
-    //prettyPrint(); // Décommenter pour voir la table des symboles avec un affichage plus joli
+    prettyPrint(); // Décommenter pour voir la table des symboles avec un affichage plus joli
     return 1;
 }

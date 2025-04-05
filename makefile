@@ -16,7 +16,7 @@ else
     CC = gcc
     EXE =
     LFLAGS = -lfl
-    CFLAGS = -Wall
+    CFLAGS = -Wall -Wextra -g
     RM = rm -f
 endif
 

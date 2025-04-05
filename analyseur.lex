@@ -58,7 +58,7 @@ TRUE|FALSE {
 
 [a-zA-Z][a-zA-Z0-9_]* {
     lastTypeObj = lastTypeObj == 0 ? TO_ATTR : lastTypeObj;
-    checkAndUpdateTab(C_IDF,yytext);
+    checkAndUpdateTab(C_IDF,yytext,yylineno);
     strcpy(yylval.chaine, yytext); 
     return IDF;
 }
@@ -83,7 +83,7 @@ TRUE|FALSE {
     return DPT;
 }
 [1-9][0-9]* {
-    checkAndUpdateTab(C_ENT,yytext);
+    checkAndUpdateTab(C_ENT,yytext,yylineno);
     yylval.valeur = atoi(yytext);
     return INT;
 }
@@ -91,15 +91,15 @@ TRUE|FALSE {
     return EG;
 }
 <INITIAL>[-+]?[0-9]+(","[0-9]+)? {
-    checkAndUpdateTab(C_REEL,yytext); 
+    checkAndUpdateTab(C_REEL,yytext,yylineno); 
     return REEL;
 }
 \"[^"]+\" {
-    checkAndUpdateTab(C_CHAINE,yytext); 
+    checkAndUpdateTab(C_CHAINE,yytext,yylineno); 
     return CH;
 }
 ['].['] {
-    checkAndUpdateTab(C_CHAR,yytext);
+    checkAndUpdateTab(C_CHAR,yytext,yylineno);
     return CAR;
 }
 \n  { yylineno++; }
@@ -110,7 +110,5 @@ TRUE|FALSE {
 %%
 
 int yywrap(){
-    //affTab(); // Décommenter pour voir la table des symboles
-    prettyPrint(); // Décommenter pour voir la table des symboles avec un affichage plus joli
     return 1;
 }

@@ -3,7 +3,6 @@
 #include <string.h>
 #include "symbol_table.h"
 
-
 // Définition des variables globales
 int** tab1 = NULL;
 int tab1_size = 0;
@@ -32,11 +31,9 @@ void freeSymbolTable() {
     free(tab2);
 }
 
-//TODO Récupérer des lien lorsque l'attribut / la constante existait deja. Pointage, référencement
 int checkTab(char* text) {
- // Vérification des doublons
     for (int i = 0; i < tab1_size; i++) {
-        if (strncmp(text, &tab2[tab1[i][1]], tab1[i][2]) == 0) {
+        if (strncmp(text, &tab2[tab1[i][1]], tab1[i][2]) == 0 && tab1[i][2] == (int)strlen(text)) {
             lastTypeObj = 0;
             return i;
         }
@@ -48,8 +45,7 @@ int insertInto(int i, int j, int value){
     tab1[i][j] = value;
 }
 
-int checkAndUpdateTab(int categorie, char* text) {
-    
+int checkAndUpdateTab(int categorie, char* text, int line) {
     int isIn = checkTab(text);
     if(isIn) {
         return isIn;
@@ -82,11 +78,12 @@ int checkAndUpdateTab(int categorie, char* text) {
     tab1[tab1_size][0] = categorie;
     tab1[tab1_size][1] = tab2_size;
     tab1[tab1_size][2] = new_str_len;
-    tab1[tab1_size][3] = lastTypeObj;
-    tab1[tab1_size][4] = 0; //Default value
+    tab1[tab1_size][3] = line;
+    tab1[tab1_size][4] = lastTypeObj;
     tab1[tab1_size][5] = 0; //Default value
     tab1[tab1_size][6] = 0; //Default value
     tab1[tab1_size][7] = 0; //Default value
+    tab1[tab1_size][8] = 0; //Default value
     lastTypeObj = 0;
 
     // Copie de yytext dans tab2
@@ -100,7 +97,7 @@ int checkAndUpdateTab(int categorie, char* text) {
 // Affichage de la table des symboles
 void affTab() {
     for (int i = 0; i < tab1_size; i++) {
-        printf("%d : [%d, %d, %d, %d, %d, %d, %d, %d]\n", i, tab1[i][0], tab1[i][1], tab1[i][2], tab1[i][3],tab1[i][4],tab1[i][5],tab1[i][6],tab1[i][7]);
+        printf("%d : [%d, %d, %d, %d, %d, %d, %d, %d, %d]\n", i, tab1[i][0], tab1[i][1], tab1[i][2], tab1[i][3],tab1[i][4],tab1[i][5],tab1[i][6],tab1[i][7],tab1[i][8]);
     }
     printf("%s\n", tab2);
 }
@@ -111,7 +108,7 @@ void prettyPrint() {
     const char* typeObj[] = {"", "env", "typA", "attr", "ag", "cont"};
 
     for (int i = 0; i < tab1_size; i++) {
-        printf("%d : [%s, %d, %d, %s, %d, %d, %d, %d]\n", i, categories[tab1[i][0]], tab1[i][1], tab1[i][2], typeObj[tab1[i][3]], tab1[i][4], tab1[i][5], tab1[i][6], tab1[i][7]);
+        printf("%d : [%s, %d, %d, %d, %s, %d, %d, %d, %d]\n", i, categories[tab1[i][0]], tab1[i][1], tab1[i][2], tab1[i][3], typeObj[tab1[i][4]], tab1[i][5], tab1[i][6], tab1[i][7],tab1[i][8]);
     }
     printf("%s\n", tab2);
 }

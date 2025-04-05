@@ -4,8 +4,11 @@
     #include <string.h>
     #include "symbol_table.h"  // Inclusion de la table des symboles
     #include "semantic_anal.h"  // Inclusion des fonctions sémantiques
+    #include "ANSI-color-codes.h" // Inclusion des codes couleurs ANSI
 
     void yyerror(char *s);
+    extern int yylineno;
+
 %}
 
 %union {
@@ -55,8 +58,8 @@ decla_env : ENV IDF CO INT VG INT CF{
     int i1 = checkTab($2); 
     int i2;
     char buff[12];
-    sprintf(buff, "%d", $4); i2 = checkTab(buff); insertInto(i1,4,i2);
-    sprintf(buff, "%d", $6); i2 = checkTab(buff); insertInto(i1,5,i2);
+    sprintf(buff, "%d", $4); i2 = checkTab(buff); insertInto(i1,5,i2);
+    sprintf(buff, "%d", $6); i2 = checkTab(buff); insertInto(i1,6,i2);
 }
 suite_prog : instruction {}
             | instruction suite_prog {}
@@ -66,7 +69,7 @@ instruction : new_typ_agent {}
 new_typ_agent : NTYPA IDF AO liste_decla_attributs AF { 
     int i1 = checkTab($2);   // WTF ?
     for (int i = 0; i < $4.taille; i++) {
-        insertInto($4.tab[i], 5, i1); // On insère, pour chaque attribut le type d'aggent auquel il appartient
+        insertInto($4.tab[i], 6, i1); // On insère, pour chaque attribut le type d'aggent auquel il appartient
         }
 }
 liste_decla_attributs : decla_attribut {$$.tab[0] = $1; $$.taille = 1;} // WTF 2 ??
@@ -80,7 +83,7 @@ liste_decla_attributs : decla_attribut {$$.tab[0] = $1; $$.taille = 1;} // WTF 2
 decla_attribut : IDF DPT type_attribut {
     int i1 = checkTab($1); 
     $$ = i1; //Fait remonter l'indice de l'attribut
-    insertInto(i1,4,$3);
+    insertInto(i1,5,$3);
 }
 type_attribut : TINT { $$ = TA_INT; }
                | TDOUBL { $$ = TA_DOUBL; }
@@ -90,11 +93,16 @@ type_attribut : TINT { $$ = TA_INT; }
 
 new_agent : NAG IDF DPT IDF CO INT VG INT CF AO liste_affect_attributs AF {
     int i1 = checkTab($2); 
-    int i2;
-    char buff[12];
-    i2 = checkTab($4); insertInto(i1,4,i2);
-    sprintf(buff, "%d", $6); i2 = checkTab(buff); insertInto(i1,5,i2);
-    sprintf(buff, "%d", $8); i2 = checkTab(buff); insertInto(i1,6,i2);
+    int i2 = checkTab($4); 
+    if(i1 > i2){ // Vérifie que le type d'agent à été délcaré avant l'agent
+        insertInto(i1,5,i2);
+        char buff[12];
+        sprintf(buff, "%d", $6); i2 = checkTab(buff); insertInto(i1,6,i2);
+        sprintf(buff, "%d", $8); i2 = checkTab(buff); insertInto(i1,7,i2);
+    } else {
+        fprintf(stderr, RED"[%d]"CRESET" -> Le type d'agent "MAG"%s"CRESET" n'as pas été déclaré avant l'agent "MAG"%s"CRESET"\n", yylineno, $4, $2);
+    }
+
 }
 liste_affect_attributs : affect_attribut {}
                         | affect_attribut VG liste_affect_attributs {}
@@ -108,16 +116,16 @@ new_context : NCT IDF CO INT CF {
         int i1 = checkTab($2);
         int i2;
         char buff[12];
-        sprintf(buff, "%d", $4); i2 = checkTab(buff); insertInto(i1,4,i2);
+        sprintf(buff, "%d", $4); i2 = checkTab(buff); insertInto(i1,5,i2);
     }
     | NCT IDF CO INT VG INT VG INT VG INT CF {
         int i1 = checkTab($2); 
         int i2;
         char buff[12];
-        sprintf(buff, "%d", $4); i2 = checkTab(buff); insertInto(i1,4,i2);
-        sprintf(buff, "%d", $6); i2 = checkTab(buff); insertInto(i1,5,i2);
-        sprintf(buff, "%d", $8); i2 = checkTab(buff); insertInto(i1,6,i2);
-        sprintf(buff, "%d", $10); i2 = checkTab(buff); insertInto(i1,7,i2);
+        sprintf(buff, "%d", $4); i2 = checkTab(buff); insertInto(i1,5,i2);
+        sprintf(buff, "%d", $6); i2 = checkTab(buff); insertInto(i1,6,i2);
+        sprintf(buff, "%d", $8); i2 = checkTab(buff); insertInto(i1,7,i2);
+        sprintf(buff, "%d", $10); i2 = checkTab(buff); insertInto(i1,8,i2);
     }
 
 %%
@@ -126,14 +134,15 @@ int main() {
     initSymbolTable();  // Initialisation de la table des symboles
 
     yyparse();  // Analyse du fichier d'entrée
-    printf("\nFin des analyses lexicale et syntaxique\n");
-   // semantic_anal();
+    printf("Fin des analyses lexicale et syntaxique\n");
+    if(!semantic_anal()) fprintf(stderr, BRED"Erreurs lors de l'analyse sémantique"CRESET"\n"); // Analyse sémantique
+    printf("Analyse sémantique terminée\n");
 
+    //prettyPrint(); // Affichage de la table des symboles
     freeSymbolTable();  // Libération de la mémoire à la fin
     return 0;
 }
 
-extern int yylineno;
 void yyerror(char *s)
 {
     fprintf(stderr, "Erreur à la ligne %d : %s\n", yylineno, s);

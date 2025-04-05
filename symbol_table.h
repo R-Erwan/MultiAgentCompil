@@ -2,7 +2,7 @@
 
 #define SYMBOL_TABLE_H
 
-#define NBCOLONNES 8
+#define NBCOLONNES 9
 
 // Catégories des éléments
 enum categorie {
@@ -39,7 +39,7 @@ extern int lastTypeObj;
 // Fonctions
 int checkTab(char* text);
 int insertInto(int i, int j, int value);
-int checkAndUpdateTab(int categorie, char* text);
+int checkAndUpdateTab(int categorie, char* text, int line);
 void affTab();
 void prettyPrint();
 void initSymbolTable();

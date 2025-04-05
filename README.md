@@ -116,20 +116,21 @@ int yywrap(){
 - **Colonne 1** : Catégorie des éléments (IDF et constantes comme ENT, CAR, REEL ...)
 - **Colonne 2** : Position de début dans le tab2
 - **Colonne 3** : Pour les IDF, son type d'objet (environnement ENV, type d'agent TYPA, attribut ATTR, agent AG, contexte CONT)
-- **Colonne > 3** : D'autres informations en fonction de l'élement.
+- **Colonne 4** : Enregistre le numéro de ligne pour l'affichage d'erreur.
+- **Colonne > 4** : D'autres informations en fonction de l'élement.
 
 ### Les colonnes > 3 : 
 - **Pour les ENV** : 
-    - *4* : indice de tab1 ou on trouve la largeur
-    - *5* :  indice de tab1 ou on trouve la longeur
+    - *5* : indice de tab1 ou on trouve la largeur
+    - *6* :  indice de tab1 ou on trouve la longeur
 - **Pour les CONT** :
-    - *4* : indice de tab1 ou on trouve la force
-    - *5* : indice de tab1 ou ou trouve le numero de ligne
-    - *6* : indice de tab1 ou on trouve le numéro de colonne
-    - *7* : indice de tab1 ou ou trouve le rayon d'influence
+    - *5* : indice de tab1 ou on trouve la force
+    - *6* : indice de tab1 ou ou trouve le numero de ligne
+    - *7* : indice de tab1 ou on trouve le numéro de colonne
+    - *8* : indice de tab1 ou ou trouve le rayon d'influence
 - **Pour les ATTR** : 
-    - *4* : le type d'attribut (1 = INT, 2 = DOUBLE, 3 = CARACTERE, 4 = CHAINE, 5 = BOOL)
-    - *5* : le type d'agent déclaré duquel il est un attribut.
+    - *5* : le type d'attribut (1 = INT, 2 = DOUBLE, 3 = CARACTERE, 4 = CHAINE, 5 = BOOL)
+    - *6* : le type d'agent déclaré duquel il est un attribut.
 - **Pour les TYPA** : Rien en plus, on pourrait peut être mettre le nombre d'attribut qu'il as.
 - **Pour les AG** : Il faut trouver une idée, pour dire ou trouver la valeur X pour l'attribut Y, mais il y a un nombre variable d'attribut, et apart avec un nombre infini de colonne, je vois pas.
 

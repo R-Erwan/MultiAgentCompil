@@ -33,27 +33,22 @@ NewContexte {
 }
 
 int {
-    lastTypeAtt = TA_INT;
     return TINT;
 }
 
 double {
-    lastTypeAtt = TA_DOU;
     return TDOUBL;
 }
 
 char {
-    lastTypeAtt = TA_CAR;
     return TCAR;
 }
 
 string {
-    lastTypeAtt = TA_STR;
     return TCH;
 }
 
 boolean {
-    lastTypeAtt = TA_BOO;
     return TBOOL;
 }
 
@@ -63,7 +58,8 @@ TRUE|FALSE {
 
 [a-zA-Z][a-zA-Z0-9_]* {
     lastTypeObj = lastTypeObj == 0 ? TO_ATTR : lastTypeObj;
-    checkAndUpdateTab(C_IDF); 
+    checkAndUpdateTab(C_IDF,yytext);
+    strcpy(yylval.chaine, yytext); 
     return IDF;
 }
 "[" {
@@ -87,22 +83,23 @@ TRUE|FALSE {
     return DPT;
 }
 [1-9][0-9]* {
-    checkAndUpdateTab(C_ENT);
+    checkAndUpdateTab(C_ENT,yytext);
+    yylval.valeur = atoi(yytext);
     return INT;
 }
 "=" {
     return EG;
 }
 <INITIAL>[-+]?[0-9]+(","[0-9]+)? {
-    checkAndUpdateTab(C_REEL); 
+    checkAndUpdateTab(C_REEL,yytext); 
     return REEL;
 }
 \"[^"]+\" {
-    checkAndUpdateTab(C_CHAINE); 
+    checkAndUpdateTab(C_CHAINE,yytext); 
     return CH;
 }
 ['].['] {
-    checkAndUpdateTab(C_CHAR);
+    checkAndUpdateTab(C_CHAR,yytext);
     return CAR;
 }
 \n  { yylineno++; }

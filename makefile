@@ -25,6 +25,9 @@ LEX_SRC = analyseur.lex
 YACC_SRC = analyseur.yacc
 SYMBOL_TABLE_SRC = symbol_table.c
 SYMBOL_TABLE_HDR = symbol_table.h
+SEMANTIC_ANAL_SRC = semantic_anal.c
+SEMANTIC_ANAL_HDR = semantic_anal.h
+
 
 # Fichiers générés
 LEX_OUT = analyseur.yy.c
@@ -32,7 +35,8 @@ YACC_OUT_C = y.tab.c
 YACC_OUT_H = y.tab.h
 
 # Objets
-OBJS = $(LEX_OUT:.c=.o) $(YACC_OUT_C:.c=.o) $(SYMBOL_TABLE_SRC:.c=.o)
+OBJS = $(LEX_OUT:.c=.o) $(YACC_OUT_C:.c=.o) $(SYMBOL_TABLE_SRC:.c=.o) $(SEMANTIC_ANAL_SRC:.c=.o)
+
 
 # Fichiers exécutable
 OUT = analyseur$(EXE)
@@ -47,6 +51,9 @@ $(YACC_OUT_C) $(YACC_OUT_H): $(YACC_SRC)
 # Génération de analyseur.yy.c
 $(LEX_OUT): $(LEX_SRC) $(YACC_OUT_H)
 	$(FLEX) -o $@ $<
+
+semantic_anal.o: semantic_anal.c semantic_anal.h symbol_table.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
 # Compilation des fichiers .c en .o
 %.o: %.c

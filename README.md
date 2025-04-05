@@ -112,34 +112,79 @@ int yywrap(){
     return 1;
 }
 ```
+### Structure table des symboles
+- **Colonne 1** : Catégorie des éléments (IDF et constantes comme ENT, CAR, REEL ...)
+- **Colonne 2** : Position de début dans le tab2
+- **Colonne 3** : Pour les IDF, son type d'objet (environnement ENV, type d'agent TYPA, attribut ATTR, agent AG, contexte CONT)
+- **Colonne > 3** : D'autres informations en fonction de l'élement.
 
-**Exemple de sortie :**
-```bash
-0 : [idf, 0, 3, env]
-1 : [ent, 3, 3, ]
-2 : [ent, 6, 2, ]
-3 : [idf, 8, 6, typA]
-4 : [idf, 14, 5, attr]
-5 : [idf, 19, 6, attr]
-6 : [idf, 25, 8, attr]
-7 : [idf, 33, 2, ag]
-8 : [ent, 35, 3, ]
-9 : [ent, 38, 2, ]
-10 : [car, 40, 3, ]
-11 : [reel, 43, 3, ]
-12 : [idf, 46, 2, ag]
-13 : [ent, 48, 3, ]
-14 : [ent, 51, 2, ]
-15 : [car, 53, 3, ]
-16 : [reel, 56, 4, ]
-17 : [idf, 60, 2, ag]
-18 : [ent, 62, 3, ]
-19 : [ent, 65, 2, ]
-20 : [reel, 67, 3, ]
-21 : [idf, 70, 5, cont]
-22 : [ent, 75, 2, ]
-23 : [ent, 77, 3, ]
-24 : [ent, 80, 1, ]
-25 : [idf, 81, 5, cont]
-rue50050pietongenretailleattentifp140010'M'1,8p230020'F'1,65p3350151,7arbre254505pluie
+### Les colonnes > 3 : 
+- **Pour les ENV** : 
+    - *4* : indice de tab1 ou on trouve la largeur
+    - *5* :  indice de tab1 ou on trouve la longeur
+- **Pour les CONT** :
+    - *4* : indice de tab1 ou on trouve la force
+    - *5* : indice de tab1 ou ou trouve le numero de ligne
+    - *6* : indice de tab1 ou on trouve le numéro de colonne
+    - *7* : indice de tab1 ou ou trouve le rayon d'influence
+- **Pour les ATTR** : 
+    - *4* : le type d'attribut (1 = INT, 2 = DOUBLE, 3 = CARACTERE, 4 = CHAINE, 5 = BOOL)
+    - *5* : le type d'agent déclaré duquel il est un attribut.
+- **Pour les TYPA** : Rien en plus, on pourrait peut être mettre le nombre d'attribut qu'il as.
+- **Pour les AG** : Il faut trouver une idée, pour dire ou trouver la valeur X pour l'attribut Y, mais il y a un nombre variable d'attribut, et apart avec un nombre infini de colonne, je vois pas.
+
+### Exemple de sortit avec pretty print
+
+```
+0 : [idf, 0, 3, env, 1, 2, 0, 0]
+1 : [ent, 3, 3, , 0, 0, 0, 0]
+2 : [ent, 6, 2, , 0, 0, 0, 0]
+3 : [idf, 8, 6, typA, 0, 0, 0, 0]
+4 : [idf, 14, 5, attr, 3, 3, 0, 0]
+5 : [idf, 19, 6, attr, 2, 3, 0, 0]
+6 : [idf, 25, 2, ag, 3, 7, 8, 0]
+7 : [ent, 27, 3, , 0, 0, 0, 0]
+8 : [ent, 30, 2, , 0, 0, 0, 0]
+9 : [car, 32, 3, , 0, 0, 0, 0]
+10 : [reel, 35, 3, , 0, 0, 0, 0]
+11 : [idf, 38, 2, ag, 3, 12, 13, 0]
+12 : [ent, 40, 3, , 0, 0, 0, 0]
+13 : [ent, 43, 2, , 0, 0, 0, 0]
+14 : [car, 45, 3, , 0, 0, 0, 0]
+15 : [reel, 48, 4, , 0, 0, 0, 0]
+16 : [idf, 52, 2, ag, 3, 17, 18, 0]
+17 : [ent, 54, 3, , 0, 0, 0, 0]
+4 : [idf, 14, 5, attr, 3, 3, 0, 0]
+5 : [idf, 19, 6, attr, 2, 3, 0, 0]
+6 : [idf, 25, 2, ag, 3, 7, 8, 0]
+7 : [ent, 27, 3, , 0, 0, 0, 0]
+8 : [ent, 30, 2, , 0, 0, 0, 0]
+9 : [car, 32, 3, , 0, 0, 0, 0]
+10 : [reel, 35, 3, , 0, 0, 0, 0]
+11 : [idf, 38, 2, ag, 3, 12, 13, 0]
+12 : [ent, 40, 3, , 0, 0, 0, 0]
+13 : [ent, 43, 2, , 0, 0, 0, 0]
+14 : [car, 45, 3, , 0, 0, 0, 0]
+15 : [reel, 48, 4, , 0, 0, 0, 0]
+16 : [idf, 52, 2, ag, 3, 17, 18, 0]
+17 : [ent, 54, 3, , 0, 0, 0, 0]
+10 : [reel, 35, 3, , 0, 0, 0, 0]
+11 : [idf, 38, 2, ag, 3, 12, 13, 0]
+12 : [ent, 40, 3, , 0, 0, 0, 0]
+13 : [ent, 43, 2, , 0, 0, 0, 0]
+14 : [car, 45, 3, , 0, 0, 0, 0]
+15 : [reel, 48, 4, , 0, 0, 0, 0]
+16 : [idf, 52, 2, ag, 3, 17, 18, 0]
+17 : [ent, 54, 3, , 0, 0, 0, 0]
+15 : [reel, 48, 4, , 0, 0, 0, 0]
+16 : [idf, 52, 2, ag, 3, 17, 18, 0]
+17 : [ent, 54, 3, , 0, 0, 0, 0]
+18 : [ent, 57, 2, , 0, 0, 0, 0]
+19 : [reel, 59, 3, , 0, 0, 0, 0]
+20 : [idf, 62, 5, cont, 21, 22, 8, 23]
+21 : [ent, 67, 2, , 0, 0, 0, 0]
+22 : [ent, 69, 3, , 0, 0, 0, 0]
+23 : [ent, 72, 1, , 0, 0, 0, 0]
+24 : [idf, 73, 5, cont, 2, 0, 0, 0]
+rue50050pietongenretaillep140010'M'1,8p230020'F'1,65p3350151,7arbre254505pluie
 ```

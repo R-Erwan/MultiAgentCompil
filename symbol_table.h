@@ -2,7 +2,7 @@
 
 #define SYMBOL_TABLE_H
 
-#define NBCOLONNES 4
+#define NBCOLONNES 8
 
 // Catégories des éléments
 enum categorie {
@@ -22,24 +22,24 @@ enum typeObj {
     TO_CONT = 5
 };
 
-enum typeAtt {
+enum typeAtrr {
     TA_INT = 1,
-    TA_DOU = 2,
+    TA_DOUBL = 2,
     TA_CAR = 3,
-    TA_STR = 4,
-    TA_BOO = 5
+    TA_CH = 4,
+    TA_BOOL = 5,
 };
-
 // Variables globales externes
 extern int** tab1;
 extern int tab1_size;
 extern char* tab2;
 extern int tab2_size;
 extern int lastTypeObj;
-extern int lastTypeAtt;
 
 // Fonctions
-int checkAndUpdateTab(int categorie);
+int checkTab(char* text);
+int insertInto(int i, int j, int value);
+int checkAndUpdateTab(int categorie, char* text);
 void affTab();
 void prettyPrint();
 void initSymbolTable();

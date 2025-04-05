@@ -119,7 +119,7 @@ int yywrap(){
 - **Colonne 4** : Enregistre le numéro de ligne pour l'affichage d'erreur.
 - **Colonne > 4** : D'autres informations en fonction de l'élement.
 
-### Les colonnes > 3 : 
+### Les colonnes > 4 : 
 - **Pour les ENV** : 
     - *5* : indice de tab1 ou on trouve la largeur
     - *6* :  indice de tab1 ou on trouve la longeur

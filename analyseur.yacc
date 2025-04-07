@@ -120,8 +120,8 @@ affect_attribut : IDF EG valeur_attribut {
 }
 valeur_attribut : INT {AgentAttribut a; a.type = TA_INT; a.value.entier = $1; $$ = addAttribut(a);}
                 | REEL {AgentAttribut a; a.type = TA_DOUBL; a.value.reel = $1; $$ = addAttribut(a);}
-                | CH {AgentAttribut a; a.type = TA_CAR; strcpy(a.value.chaine, $1); $$ = addAttribut(a);}
-                | CAR {AgentAttribut a; a.type = TA_CH; a.value.caractere = $1; $$ = addAttribut(a);}
+                | CH {AgentAttribut a; a.type = TA_CH; strcpy(a.value.chaine, $1); $$ = addAttribut(a);}
+                | CAR {AgentAttribut a; a.type = TA_CAR; a.value.caractere = $1; $$ = addAttribut(a);}
                 | BOOL {AgentAttribut a; a.type = TA_BOOL; a.value.entier = $1; $$ = addAttribut(a);}
 new_context : NCT IDF CO INT CF {  
         int i1 = checkTab($2);

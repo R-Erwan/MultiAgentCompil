@@ -28,6 +28,7 @@ int semantic_anal(){
         }
         if(tab1[i][0] == C_IDF && tab1[i][4] == TO_AG){
             if(!isValidPosition(i,envX,envY)) error = 0; //Vérifie la position de l'agent si agent localisé
+            if(!isValidAgentAttributs(i)) error = 0; //Vérifie le nombre d'attributs de l'agent
 
             continue;
         }
@@ -88,12 +89,57 @@ int isValidPosition(int index, int envX, int envY) {
     free(posY);
     return 1;
 }
-/*
+
+// ! Atention on considère, que deux types d'agenst ne peuvent pas avoir le même nom pour un attributs
+
 int isValidAgentAttributs(int index){
     int line = tab1[index][3]; // Ligne de déclaration de l'agent
-    int typeAgent = tab1[index][5]; // Type d'agent
+    int typeAgent = tab1[index][5]; // Index du type d'agent 
     int indexAgent = tab1[index][8]; // Index de l'agent déclaré
     Agent* agent = getAgent(indexAgent); // Agent déclaré
-    int nbTypeAAtributs = 
+    int nbTypeAAtributs = tab1[typeAgent][5];// Nombre d'attributs du type d'agent
+    int nbAgentAAtributs = agent->attributs_size; // Nombre d'attributs de l'agent déclaré
 
-}*/
+    if(nbTypeAAtributs != nbAgentAAtributs) { 
+        char* agentName = at(index); // Nom de l'agent déclaré
+        char* typeAgentName = at(typeAgent); // Nom du type d'agent
+        fprintf(stderr,RED"[%d]"CRESET" -> Erreur: "MAG"[%s] "CRESET"Le nombre d'attributs de l'agent déclaré ne correspond pas au nombre d'attributs du type "CYN"%s"CRESET"\n", line, agentName,typeAgentName);
+        free(agentName);
+        free(typeAgentName);
+        return 0;
+    } 
+
+    for(int i = 0; i < nbTypeAAtributs ; i++){
+        char* nomAttrTypeA = at(typeAgent + i + 1); // Nom de l'attribut du type d'agent
+        char* nomAttrAgent = agent->attributs[i].attr; // Nom de l'attribut de l'agent déclaré
+        int typeAtrrTypeA = tab1[typeAgent + i + 1][5]; // Type de l'attribut du type d'agent
+        int typeAtrrAgent = agent->attributs[i].type;
+
+        if(strcmp(nomAttrTypeA, nomAttrAgent) != 0) { // Vérifie si le nom de l'attribut de l'agent déclaré est le même que celui du type d'agent
+            char* agentName = at(index); // Nom de l'agent déclaré
+            char* typeAgentName = at(typeAgent); // Nom du type d'agent
+            fprintf(stderr,
+                RED"[%d]"CRESET" -> Erreur: "MAG"[%s] "CRESET"Le nom de l'attribut "CYN"%s"CRESET" de l'agent ne correspond pas au nom de l'attribut "CYN"%s"CRESET" du type d'agent "CYN"%s"CRESET"\n", 
+                line, agentName,nomAttrAgent,nomAttrTypeA,typeAgentName);
+            free(agentName);
+            free(typeAgentName);
+            free(nomAttrTypeA);
+            return 0;
+        }
+        if(typeAtrrTypeA != typeAtrrAgent) { // Vérifie si le type de l'attribut de l'agent déclaré est le même que celui du type d'agent
+            char* agentName = at(index); // Nom de l'agent déclaré
+            char* typeAgentName = at(typeAgent); // Nom du type d'agent
+            const char* types[] = {"", "int", "double", "char", "string", "bool"};
+            fprintf(stderr,
+                RED"[%d]"CRESET" -> Erreur: "MAG"[%s] "CRESET"Le type de l'attribut "CYN"%s : %s"CRESET" de l'agent ne correspond pas au type de l'attribut "CYN"%s : %s"CRESET" du type d'agent "CYN"%s "CRESET"\n",
+                line, agentName,nomAttrAgent,types[typeAtrrTypeA], nomAttrTypeA,types[typeAtrrAgent],typeAgentName);
+            free(agentName);
+            free(typeAgentName);
+            free(nomAttrTypeA);
+            return 0;
+        }
+        free(nomAttrTypeA);
+    }
+
+    return 1;
+}

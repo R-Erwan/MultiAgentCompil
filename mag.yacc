@@ -5,9 +5,11 @@
     #include "symbol_table.h"  // Inclusion de la table des symboles
     #include "semantic_anal.h"  // Inclusion des fonctions sémantiques
     #include "agents.h"  // Inclusion de la structure d'agent
+    #include "transpileur.h"
     #include "ANSI-color-codes.h" // Inclusion des codes couleurs ANSI
 
     void yyerror(char *s);
+    extern int yylex(void);
     extern int yylineno;
 
     typedef 
@@ -122,7 +124,7 @@ valeur_attribut : INT {AgentAttribut a; a.type = TA_INT; a.value.entier = $1; $$
                 | REEL {AgentAttribut a; a.type = TA_DOUBL; a.value.reel = $1; $$ = addAttribut(a);}
                 | CH {AgentAttribut a; a.type = TA_CH; strcpy(a.value.chaine, $1); $$ = addAttribut(a);}
                 | CAR {AgentAttribut a; a.type = TA_CAR; a.value.caractere = $1; $$ = addAttribut(a);}
-                | BOOL {AgentAttribut a; a.type = TA_BOOL; a.value.entier = $1; $$ = addAttribut(a);}
+                | BOOL {AgentAttribut a; a.type = TA_BOOL; a.value.entier = atoi($1); $$ = addAttribut(a);}
 new_context : NCT IDF CO INT CF {  
         int i1 = checkTab($2);
         int i2;
@@ -141,22 +143,44 @@ new_context : NCT IDF CO INT CF {
 
 %%
 
-int main() {
-    initSymbolTable();  // Initialisation de la table des symboles
-    initCurrentAttributs(); // Initialisation de la liste des attributs courants
-    initAgents(); // Initialisation de la liste des agents
+int main(int argc, char **argv) {
+    if (argc != 3) {
+        fprintf(stderr, "Usage: %s <fichier d'entrée> <nom de sortie sans extension>\n", argv[0]);
+        return 1;
+    }
 
-    yyparse();  // Analyse du fichier d'entrée
+    // Redirige le fichier d'entrée vers stdin
+    FILE *input = freopen(argv[1], "r", stdin);
+    if (input == NULL) {
+        perror("Erreur lors de l'ouverture du fichier d'entrée");
+        return 1;
+    }
+
+    // Construire nom du fichier de sortie avec extension .m
+    char output_file[256];
+    snprintf(output_file, sizeof(output_file), "%s.m", argv[2]);
+
+    initSymbolTable();
+    initCurrentAttributs();
+    initAgents();
+
+    yyparse();
     printf("Fin des analyses lexicale et syntaxique\n");
-    if(!semantic_anal()) fprintf(stderr, BRED"Erreurs lors de l'analyse sémantique"CRESET"\n"); // Analyse sémantique
-    printf("Analyse sémantique terminée\n");
+    params p = semantic_anal();
+    if (!p.result) {
+        fprintf(stderr, BRED"Erreurs lors de l'analyse sémantique"CRESET"\n");
+    } else {
+        printf("Analyse sémantique terminée\n");
+        transpile(output_file,p);
+        printf("Fichier de sortie généré avec succès : "BLU"%s\n"CRESET, output_file);
+    }
 
-    prettyPrint(); // Affichage de la table des symboles pour le débogage
-    printAllAgents(); // Affichage de la liste des agents pour le débogage
-    freeAllAgents(); // Libération de la mémoire des agents 
-    freeSymbolTable();  // Libération de la mémoire à la fin
+    freeAllAgents();
+    freeSymbolTable();
     return 0;
 }
+
+
 
 void yyerror(char *s)
 {

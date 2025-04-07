@@ -45,7 +45,7 @@ int checkTab(char* text) {
     return 0;
 }
 
-int insertInto(int i, int j, int value){
+void insertInto(int i, int j, int value){
     tab1[i][j] = value;
 }
 

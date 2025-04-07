@@ -10,30 +10,31 @@ extern int tab1_size;
 extern char* tab2;
 extern int tab2_size;
 
-int semantic_anal(){
-    int envX;
-    int envY;
-    int error = 1;
+params semantic_anal(){
+    params p;
+    p.nbTypeAgents = 0;
+    p.result = 1;
     for (int i = 0; i < tab1_size; i++) {
         if(tab1[i][0] == C_IDF && tab1[i][4] == TO_ENV){
-            setEnvValues(&envX, &envY, i); // Affecte la taille de l'environnement
+            setEnvValues(&p.x, &p.y, i); // Affecte la taille de l'environnement
             continue;
         } 
         if(tab1[i][0] == C_IDF && tab1[i][4] == TO_CONT){
-            if(!isValidContStrenght(i)) error = 0; //Vérifie la force du contexte
+            if(!isValidContStrenght(i)) p.result = 0; //Vérifie la force du contexte
             if(tab1[i][5] != 0){
-                if(!isValidPosition(i,envX,envY)) error = 0; //Vérifie la position du contexte si contexte localisé
+                if(!isValidPosition(i,p.x,p.y)) p.result = 0; //Vérifie la position du contexte si contexte localisé
             }
             continue;
         }
         if(tab1[i][0] == C_IDF && tab1[i][4] == TO_AG){
-            if(!isValidPosition(i,envX,envY)) error = 0; //Vérifie la position de l'agent si agent localisé
-            if(!isValidAgentAttributs(i)) error = 0; //Vérifie le nombre d'attributs de l'agent
+            if(!isValidPosition(i,p.x,p.y)) p.result = 0; //Vérifie la position de l'agent si agent localisé
+            if(!isValidAgentAttributs(i)) p.result = 0; //Vérifie le nombre d'attributs de l'agent
+            p.nbTypeAgents ++;
 
             continue;
         }
     }
-    return error;
+    return p;
 }
 
 char* at(int line){

@@ -4,7 +4,14 @@
 
 #include "ANSI-color-codes.h"
 
-int semantic_anal();
+typedef struct {
+    int x;
+    int y;
+    int nbTypeAgents;
+    int result;
+} params;
+
+params semantic_anal();
 char* at(int line);
 void setEnvValues(int* envX, int* envY, int index);
 int isValidContStrenght(int index);

@@ -31,7 +31,7 @@ extern int lastTypeObj;
 
 // Fonctions
 int checkTab(char* text);
-int insertInto(int i, int j, int value);
+void insertInto(int i, int j, int value);
 int checkAndUpdateTab(int categorie, char* text, int line);
 void affTab();
 void prettyPrint();

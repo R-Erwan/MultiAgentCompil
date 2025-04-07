@@ -3,6 +3,9 @@
 #include <string.h>
 #include "symbol_table.h"
 
+// Structure pour stoker les informations d'un agent.
+
+
 // Définition des variables globales
 int** tab1 = NULL;
 int tab1_size = 0;
@@ -30,6 +33,7 @@ void freeSymbolTable() {
     free(tab1);
     free(tab2);
 }
+
 
 int checkTab(char* text) {
     for (int i = 0; i < tab1_size; i++) {

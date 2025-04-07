@@ -22,13 +22,6 @@ enum typeObj {
     TO_CONT = 5
 };
 
-enum typeAtrr {
-    TA_INT = 1,
-    TA_DOUBL = 2,
-    TA_CAR = 3,
-    TA_CH = 4,
-    TA_BOOL = 5,
-};
 // Variables globales externes
 extern int** tab1;
 extern int tab1_size;
@@ -44,5 +37,6 @@ void affTab();
 void prettyPrint();
 void initSymbolTable();
 void freeSymbolTable();
+
 
 #endif // SYMBOL_TABLE_H

@@ -3,6 +3,7 @@
 #include <string.h>
 #include "semantic_anal.h"
 #include "symbol_table.h"
+#include "agents.h"
 
 extern int** tab1;
 extern int tab1_size;
@@ -27,6 +28,7 @@ int semantic_anal(){
         }
         if(tab1[i][0] == C_IDF && tab1[i][4] == TO_AG){
             if(!isValidPosition(i,envX,envY)) error = 0; //Vérifie la position de l'agent si agent localisé
+
             continue;
         }
     }
@@ -86,3 +88,12 @@ int isValidPosition(int index, int envX, int envY) {
     free(posY);
     return 1;
 }
+/*
+int isValidAgentAttributs(int index){
+    int line = tab1[index][3]; // Ligne de déclaration de l'agent
+    int typeAgent = tab1[index][5]; // Type d'agent
+    int indexAgent = tab1[index][8]; // Index de l'agent déclaré
+    Agent* agent = getAgent(indexAgent); // Agent déclaré
+    int nbTypeAAtributs = 
+
+}*/

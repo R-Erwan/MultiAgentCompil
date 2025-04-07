@@ -53,6 +53,7 @@ boolean {
 }
 
 TRUE|FALSE {
+    yylval.valeur = (strcmp(yytext, "TRUE") == 0) ? 1 : 0;
     return BOOL;
 }
 
@@ -91,15 +92,18 @@ TRUE|FALSE {
     return EG;
 }
 <INITIAL>[-+]?[0-9]+(","[0-9]+)? {
-    checkAndUpdateTab(C_REEL,yytext,yylineno); 
+    checkAndUpdateTab(C_REEL,yytext,yylineno);
+    yylval.reel = atof(yytext); 
     return REEL;
 }
 \"[^"]+\" {
     checkAndUpdateTab(C_CHAINE,yytext,yylineno); 
+    strcpy(yylval.chaine, yytext);
     return CH;
 }
 ['].['] {
     checkAndUpdateTab(C_CHAR,yytext,yylineno);
+    yylval.caractere = yytext[1];
     return CAR;
 }
 \n  { yylineno++; }

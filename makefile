@@ -27,6 +27,8 @@ SYMBOL_TABLE_SRC = symbol_table.c
 SYMBOL_TABLE_HDR = symbol_table.h
 SEMANTIC_ANAL_SRC = semantic_anal.c
 SEMANTIC_ANAL_HDR = semantic_anal.h
+AGENT_SRC = agents.c
+AGENT_HDR = agents.h
 
 
 # Fichiers générés
@@ -35,7 +37,7 @@ YACC_OUT_C = y.tab.c
 YACC_OUT_H = y.tab.h
 
 # Objets
-OBJS = $(LEX_OUT:.c=.o) $(YACC_OUT_C:.c=.o) $(SYMBOL_TABLE_SRC:.c=.o) $(SEMANTIC_ANAL_SRC:.c=.o)
+OBJS = $(LEX_OUT:.c=.o) $(YACC_OUT_C:.c=.o) $(SYMBOL_TABLE_SRC:.c=.o) $(SEMANTIC_ANAL_SRC:.c=.o) $(AGENT_SRC:.c=.o)
 
 
 # Fichiers exécutable

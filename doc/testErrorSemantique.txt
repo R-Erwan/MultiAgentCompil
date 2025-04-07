@@ -6,7 +6,7 @@ NewTypeAgent pieton
 NewAgent p1 : pieton [400, 10] { genre='M' , taille = 1,8 }
 NewAgent p2 : pieton[300,90] { genre='F' , taille = 1,65 }
 NewAgent p3 : pieton[350,15] { genre='M' , taille = 1,7 }
-NewAgent v1 : voiture [400,25] { carburant="electrique", prix = 1854,14 }
+NewAgent v1 : voiture [400,25] { carburant=TRUE, prix = 1854,14 }
 
 NewContexte arbre [212,550,10,5]
 NewContexte pluie[125]

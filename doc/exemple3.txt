@@ -1,0 +1,22 @@
+Environnement rue [100, 30]
+
+NewTypeAgent pieton 
+{ genre : char ,
+taille : double 
+}
+
+NewTypeAgent voiture
+{ marque : string ,
+modele : string }
+
+NewAgent p1 : pieton [18 , 5]{ genre='M' , taille = 1,8 }
+NewAgent p2 : pieton[55,6] { genre='F' , taille = 1,65 }
+
+NewAgent v1 : voiture[20,20] { marque="Renault" , modele = "Captur" }
+NewAgent v2 : voiture[40,20] { marque="Peugeot" , modele = "2008" }
+
+NewContexte arbre [25,15,10,8]
+
+NewContexte poteau [25,80,25,3]
+
+

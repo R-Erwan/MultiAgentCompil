@@ -2,9 +2,9 @@
 #define RGBCOLOR_H
 
 typedef struct {
-    int r;
-    int g;
-    int b;
+    float r;
+    float g;
+    float b;
 } RGBColor;
 
 RGBColor hsvToRgb(float h, float s, float v);

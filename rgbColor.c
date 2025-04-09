@@ -5,7 +5,7 @@
 
 RGBColor hsvToRgb(float h, float s, float v) {
     float c = v * s;
-    float x = c * (1 - fabs(fmodf(h / 60.0f, 2) - 1));
+    float x = c * (1 - fabsf(fmodf(h / 60.0f, 2) - 1));
     float m = v - c;
 
     float r_, g_, b_;
@@ -17,14 +17,18 @@ RGBColor hsvToRgb(float h, float s, float v) {
     else              { r_ = c; g_ = 0; b_ = x; }
 
     RGBColor color;
-    color.r = (int)((r_ + m) * 255);
-    color.g = (int)((g_ + m) * 255);
-    color.b = (int)((b_ + m) * 255);
+    color.r = r_ + m;
+    color.g = g_ + m;
+    color.b = b_ + m;
     return color;
 }
 
 float colorDistance(RGBColor a, RGBColor b) {
-    return sqrtf((a.r - b.r)*(a.r - b.r) + (a.g - b.g)*(a.g - b.g) + (a.b - b.b)*(a.b - b.b));
+    return sqrtf(
+        (a.r - b.r) * (a.r - b.r) +
+        (a.g - b.g) * (a.g - b.g) +
+        (a.b - b.b) * (a.b - b.b)
+    );
 }
 
 RGBColor* generateColors(int count, RGBColor forbidden1, RGBColor forbidden2) {
@@ -33,9 +37,9 @@ RGBColor* generateColors(int count, RGBColor forbidden1, RGBColor forbidden2) {
 
     int i = 0, attempt = 0;
     while (i < count && attempt < count * 10) {
-        float hue = fmodf((360.0f / count) * i + attempt * 13, 360.0f);  // variation si conflit
+        float hue = fmodf((360.0f / count) * i + attempt * 13, 360.0f);
         RGBColor c = hsvToRgb(hue, 0.9f, 0.95f);
-        if (colorDistance(c, forbidden1) > 50 && colorDistance(c, forbidden2) > 50) {
+        if (colorDistance(c, forbidden1) > 0.2f && colorDistance(c, forbidden2) > 0.2f) {
             colors[i++] = c;
         }
         attempt++;

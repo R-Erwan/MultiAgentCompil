@@ -97,21 +97,13 @@ make distclean -> Nettoyage complet y compris executable
 
 **Exécuter**
 ```bash
-./analyseur < <fichier d'entrée>
+./mag < <input file> <output file>
 ```
 
 ## Table des symboles
 
 **symbol_table.c** et **symbole_table.h**
-### Activer la table des symboles
-Fichier : *analyseur.lex* 
-```python
-int yywrap(){
-    //affTab(); // Décommenter pour voir la table des symboles
-    //prettyPrint(); // Décommenter pour voir la table des symboles avec un affichage plus joli
-    return 1;
-}
-```
+
 ### Structure table des symboles
 - **Colonne 1** : Catégorie des éléments (IDF et constantes comme ENT, CAR, REEL ...)
 - **Colonne 2** : Position de début dans le tab2
@@ -130,62 +122,69 @@ int yywrap(){
     - *8* : indice de tab1 ou ou trouve le rayon d'influence
 - **Pour les ATTR** : 
     - *5* : le type d'attribut (1 = INT, 2 = DOUBLE, 3 = CARACTERE, 4 = CHAINE, 5 = BOOL)
-    - *6* : le type d'agent déclaré duquel il est un attribut.
-- **Pour les TYPA** : Rien en plus, on pourrait peut être mettre le nombre d'attribut qu'il as.
-- **Pour les AG** : Il faut trouver une idée, pour dire ou trouver la valeur X pour l'attribut Y, mais il y a un nombre variable d'attribut, et apart avec un nombre infini de colonne, je vois pas.
+    - *6* : le type d'agent déclaré duquel il est un attribut
+- **Pour les TYPA** :
+    - *5* : Le nombre d'attributs pour le type
+- **Pour les AG** :
+    - *5* : indice de tab1 ou on trouve la déclaration du type d'agent
+    - *6* : indice de tab1 ou on trouve la position x (ligne)
+    - *7* : indice de tab1 ou on trouve la position y (colonne)
+    - *8* : indice du tableau des agents, ou on trouve les attributs déclaré pour l'agent
 
 ### Exemple de sortit avec pretty print
 
-```
-0 : [idf, 0, 3, env, 1, 2, 0, 0]
-1 : [ent, 3, 3, , 0, 0, 0, 0]
-2 : [ent, 6, 2, , 0, 0, 0, 0]
-3 : [idf, 8, 6, typA, 0, 0, 0, 0]
-4 : [idf, 14, 5, attr, 3, 3, 0, 0]
-5 : [idf, 19, 6, attr, 2, 3, 0, 0]
-6 : [idf, 25, 2, ag, 3, 7, 8, 0]
-7 : [ent, 27, 3, , 0, 0, 0, 0]
-8 : [ent, 30, 2, , 0, 0, 0, 0]
-9 : [car, 32, 3, , 0, 0, 0, 0]
-10 : [reel, 35, 3, , 0, 0, 0, 0]
-11 : [idf, 38, 2, ag, 3, 12, 13, 0]
-12 : [ent, 40, 3, , 0, 0, 0, 0]
-13 : [ent, 43, 2, , 0, 0, 0, 0]
-14 : [car, 45, 3, , 0, 0, 0, 0]
-15 : [reel, 48, 4, , 0, 0, 0, 0]
-16 : [idf, 52, 2, ag, 3, 17, 18, 0]
-17 : [ent, 54, 3, , 0, 0, 0, 0]
-4 : [idf, 14, 5, attr, 3, 3, 0, 0]
-5 : [idf, 19, 6, attr, 2, 3, 0, 0]
-6 : [idf, 25, 2, ag, 3, 7, 8, 0]
-7 : [ent, 27, 3, , 0, 0, 0, 0]
-8 : [ent, 30, 2, , 0, 0, 0, 0]
-9 : [car, 32, 3, , 0, 0, 0, 0]
-10 : [reel, 35, 3, , 0, 0, 0, 0]
-11 : [idf, 38, 2, ag, 3, 12, 13, 0]
-12 : [ent, 40, 3, , 0, 0, 0, 0]
-13 : [ent, 43, 2, , 0, 0, 0, 0]
-14 : [car, 45, 3, , 0, 0, 0, 0]
-15 : [reel, 48, 4, , 0, 0, 0, 0]
-16 : [idf, 52, 2, ag, 3, 17, 18, 0]
-17 : [ent, 54, 3, , 0, 0, 0, 0]
-10 : [reel, 35, 3, , 0, 0, 0, 0]
-11 : [idf, 38, 2, ag, 3, 12, 13, 0]
-12 : [ent, 40, 3, , 0, 0, 0, 0]
-13 : [ent, 43, 2, , 0, 0, 0, 0]
-14 : [car, 45, 3, , 0, 0, 0, 0]
-15 : [reel, 48, 4, , 0, 0, 0, 0]
-16 : [idf, 52, 2, ag, 3, 17, 18, 0]
-17 : [ent, 54, 3, , 0, 0, 0, 0]
-15 : [reel, 48, 4, , 0, 0, 0, 0]
-16 : [idf, 52, 2, ag, 3, 17, 18, 0]
-17 : [ent, 54, 3, , 0, 0, 0, 0]
-18 : [ent, 57, 2, , 0, 0, 0, 0]
-19 : [reel, 59, 3, , 0, 0, 0, 0]
-20 : [idf, 62, 5, cont, 21, 22, 8, 23]
-21 : [ent, 67, 2, , 0, 0, 0, 0]
-22 : [ent, 69, 3, , 0, 0, 0, 0]
-23 : [ent, 72, 1, , 0, 0, 0, 0]
-24 : [idf, 73, 5, cont, 2, 0, 0, 0]
+```yaml
+0 : [idf, 0, 3, 1, env, 1, 2, 0, 0]
+1 : [ent, 3, 3, 1, , 0, 0, 0, 0]
+2 : [ent, 6, 2, 1, , 0, 0, 0, 0]
+3 : [idf, 8, 6, 2, typA, 2, 0, 0, 0]
+4 : [idf, 14, 5, 3, attr, 3, 3, 0, 0]
+5 : [idf, 19, 6, 4, attr, 2, 3, 0, 0]
+6 : [idf, 25, 2, 6, ag, 3, 7, 8, 0]
+7 : [ent, 27, 3, 6, , 0, 0, 0, 0]
+8 : [ent, 30, 2, 6, , 0, 0, 0, 0]
+9 : [car, 32, 3, 6, , 0, 0, 0, 0]
+10 : [reel, 35, 3, 6, , 0, 0, 0, 0]
+11 : [idf, 38, 2, 7, ag, 3, 12, 13, 1]
+12 : [ent, 40, 3, 7, , 0, 0, 0, 0]
+13 : [ent, 43, 2, 7, , 0, 0, 0, 0]
+14 : [car, 45, 3, 7, , 0, 0, 0, 0]
+15 : [reel, 48, 4, 7, , 0, 0, 0, 0]
+16 : [idf, 52, 2, 8, ag, 3, 17, 18, 2]
+17 : [ent, 54, 3, 8, , 0, 0, 0, 0]
+18 : [ent, 57, 2, 8, , 0, 0, 0, 0]
+19 : [reel, 59, 3, 8, , 0, 0, 0, 0]
+20 : [idf, 62, 5, 9, cont, 21, 22, 8, 23]
+21 : [ent, 67, 2, 9, , 0, 0, 0, 0]
+22 : [ent, 69, 3, 9, , 0, 0, 0, 0]
+23 : [ent, 72, 1, 9, , 0, 0, 0, 0]
+24 : [idf, 73, 5, 10, cont, 2, 0, 0, 0]
 rue50050pietongenretaillep140010'M'1,8p230020'F'1,65p3350151,7arbre254505pluie
+Fin des analyses lexicale et syntaxique
+Analyse sémantique terminée
+Fichier de sortie généré avec succès : test.m
+```
+
+### Exemple de fichier matlab généré : 
+```matlab
+rue = zeros(100,30,3);
+rue(18,5,:) = [0.95,0.10,0.10];
+rue(55,6,:) = [0.95,0.10,0.10];
+rue(20,20,:) = [0.34,0.95,0.10];
+rue(40,20,:) = [0.34,0.95,0.10];
+for lig =  (15-8) : (15+8)
+	for col = (10-8) : (10+8)
+		if all(squeeze(rue(lig,col,:))' == [0.00,0.00,0.00]) && sqrt((lig-15)^2+(col-10)^2)<=8
+			rue(lig,col,:) = [1.00,1.00,1.00];
+		end
+	end
+end
+for lig =  (80-3) : (80+3)
+	for col = (25-3) : (25+3)
+		if all(squeeze(rue(lig,col,:))' == [0.00,0.00,0.00]) && sqrt((lig-80)^2+(col-25)^2)<=3
+			rue(lig,col,:) = [1.00,1.00,1.00];
+		end
+	end
+end
+imwrite(rue,'rue.bmp','bmp')
 ```

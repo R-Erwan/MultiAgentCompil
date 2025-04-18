@@ -107,29 +107,30 @@ make distclean -> Nettoyage complet y compris executable
 ### Structure table des symboles
 - **Colonne 1** : Catégorie des éléments (IDF et constantes comme ENT, CAR, REEL ...)
 - **Colonne 2** : Position de début dans le tab2
-- **Colonne 3** : Pour les IDF, son type d'objet (environnement ENV, type d'agent TYPA, attribut ATTR, agent AG, contexte CONT)
+- **Colonne 3** : Taille de l'élément
 - **Colonne 4** : Enregistre le numéro de ligne pour l'affichage d'erreur.
-- **Colonne > 4** : D'autres informations en fonction de l'élement.
+- **Colonne 5** : Pour les IDF, son type d'objet (environnement ENV, type d'agent TYPA, attribut ATTR, agent AG, contexte CONT)
+- **Colonne > 5** : D'autres informations en fonction de l'élement.
 
-### Les colonnes > 4 : 
+### Les colonnes > 5 : 
 - **Pour les ENV** : 
-    - *5* : indice de tab1 ou on trouve la largeur
-    - *6* :  indice de tab1 ou on trouve la longeur
+    - *6* : indice de tab1 ou on trouve la largeur
+    - *7* :  indice de tab1 ou on trouve la longeur
 - **Pour les CONT** :
-    - *5* : indice de tab1 ou on trouve la force
-    - *6* : indice de tab1 ou ou trouve le numero de ligne
-    - *7* : indice de tab1 ou on trouve le numéro de colonne
-    - *8* : indice de tab1 ou ou trouve le rayon d'influence
+    - *6* : indice de tab1 ou on trouve la force
+    - *7* : indice de tab1 ou ou trouve le numero de ligne
+    - *8* : indice de tab1 ou on trouve le numéro de colonne
+    - *9* : indice de tab1 ou ou trouve le rayon d'influence
 - **Pour les ATTR** : 
-    - *5* : le type d'attribut (1 = INT, 2 = DOUBLE, 3 = CARACTERE, 4 = CHAINE, 5 = BOOL)
-    - *6* : le type d'agent déclaré duquel il est un attribut
+    - *6* : le type d'attribut (1 = INT, 2 = DOUBLE, 3 = CARACTERE, 4 = CHAINE, 5 = BOOL)
+    - *7* : le type d'agent déclaré duquel il est un attribut
 - **Pour les TYPA** :
-    - *5* : Le nombre d'attributs pour le type
+    - *6* : Le nombre d'attributs pour le type
 - **Pour les AG** :
-    - *5* : indice de tab1 ou on trouve la déclaration du type d'agent
-    - *6* : indice de tab1 ou on trouve la position x (ligne)
-    - *7* : indice de tab1 ou on trouve la position y (colonne)
-    - *8* : indice du tableau des agents, ou on trouve les attributs déclaré pour l'agent
+    - *6* : indice de tab1 ou on trouve la déclaration du type d'agent
+    - *7* : indice de tab1 ou on trouve la position x (ligne)
+    - *8* : indice de tab1 ou on trouve la position y (colonne)
+    - *9* : indice du tableau des agents, ou on trouve les attributs déclaré pour l'agent
 
 ### Exemple de sortit avec pretty print
 

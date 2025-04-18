@@ -165,6 +165,7 @@ int main(int argc, char **argv) {
     initAgents();
 
     yyparse();
+    //prettyPrint(); Affichage table des symboles
     printf("Fin des analyses lexicale et syntaxique\n");
     params p = semantic_anal();
     if (!p.result) {

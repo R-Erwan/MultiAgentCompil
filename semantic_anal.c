@@ -98,6 +98,10 @@ int isValidAgentAttributs(int index){
     int typeAgent = tab1[index][5]; // Index du type d'agent 
     int indexAgent = tab1[index][8]; // Index de l'agent déclaré
     Agent* agent = getAgent(indexAgent); // Agent déclaré
+    if(agent == NULL) {
+        fprintf(stderr, RED"[%d]"CRESET" -> Erreur: "MAG"[%s] "CRESET"Agent déclaré non trouvé\n", line, at(index));
+        return 0;
+    }
     int nbTypeAAtributs = tab1[typeAgent][5];// Nombre d'attributs du type d'agent
     int nbAgentAAtributs = agent->attributs_size; // Nombre d'attributs de l'agent déclaré
 
